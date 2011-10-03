@@ -37,17 +37,17 @@ if($_SERVER["argc"] == 3)
 	print("Writing to file: " . "./" . $podcastName . ".cue\n");
 	$file = fopen("./" . $podcastName . ".cue", 'w');
 	fwrite($file, '
-		REM GENRE "Metal"
-		REM DATE "' . date("Y") . '"
-		PERFORMER "VA"
-		TITLE "' . $podcastName . '"
-		FILE "' . $podcastFileName . '" ' . $podcastFormat . '
-		
-		TRACK 01 AUDIO
-			TITLE "Open MetalCast Intro"
-			PERFORMER "Craig Maloney"
-			INDEX 01 00:00:00
-	');
+REM GENRE "Metal"
+REM DATE "' . date("Y") . '"
+PERFORMER "VA"
+TITLE "' . $podcastName . '"
+FILE "' . $podcastFileName . '" ' . $podcastFormat . '
+
+TRACK 01 AUDIO
+	TITLE "Open MetalCast Intro"
+	PERFORMER "Craig Maloney"
+	INDEX 01 00:00:00
+');
 	
 	$trackNum=2;
 	
@@ -56,12 +56,13 @@ if($_SERVER["argc"] == 3)
 		preg_match($timeRegExp, $curLine, $curTime);
 		preg_match($nameRegExp, $curLine, $curName);
 		preg_match($artistRegExp, $curLine, $curArtist);
+		if($trackNum < 10) $zero="0";
 		fwrite($file, '
-		TRACK ' . $trackNum . ' AUDIO
-			TITLE "' . $curName[1] . '"
-			PERFORMER "' . $curArtist[1] . '"
-			INDEX 01 ' . $curTime[1] . ':00
-		');
+TRACK ' . $zero . $trackNum . ' AUDIO
+	TITLE "' . $curName[1] . '"
+	PERFORMER "' . $curArtist[1] . '"
+	INDEX 01 ' . $curTime[1] . ':00
+');
 		$trackNum++;
 	}
 	fwrite($file, "\n");
