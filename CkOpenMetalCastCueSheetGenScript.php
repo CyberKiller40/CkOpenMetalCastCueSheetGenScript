@@ -20,9 +20,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-if($_SERVER["argc"] != 3)
+if($_SERVER["argc"] == 3)
 {
-
 	$timeRegExp="/^(\d+:\d+)\s.+\sby\s.+\sfrom\s.+\s\(.+\)$/";
 	$nameRegExp="/^\d+:\d+\s(.+)\sby\s.+\sfrom\s.+\s\(.+\)$/";
 	$artistRegExp="/^\d+:\d+\s.+\sby\s(.+)\sfrom\s.+\s\(.+\)$/";
@@ -30,26 +29,26 @@ if($_SERVER["argc"] != 3)
 	//$licenseRegExp="/^\d+:\d+\s.+\sby\s.+\sfrom\s.+\s\((.+)\)$/";
 	
 	$podcastFileName=$_SERVER["argv"][2];
-	$podcastName=substr($_SERVER["argv"][2], 0, -4);
-	$podcastFormat=substr($_SERVER["argv"][2], -3, 3);
+	$podcastName=substr($podcastFileName, 0, -4);
+	$podcastFormat=substr($podcastFileName, -3, 3);
 
 	$lines = file($_SERVER["argv"][1]);
 
-	$file = fopen("./" . $_SERVER["argv"][1] .".cue", 'w');
+	$file = fopen("./" . $podcastName . ".cue", 'w');
 	fwrite($file, '
-	REM GENRE "Metal"
-	REM DATE "' . date("Y") . '"
-	PERFORMER "VA"
-	TITLE "' . $podcastName . '"
-	FILE "' . $podcastFileName . '" ' . $podcastFormat . '
-	
-	TRACK 01 AUDIO
-		TITLE "Open MetalCast Intro"
-		PERFORMER "Craig Maloney"
-		INDEX 01 00:00:00
+		REM GENRE "Metal"
+		REM DATE "' . date("Y") . '"
+		PERFORMER "VA"
+		TITLE "' . $podcastName . '"
+		FILE "' . $podcastFileName . '" ' . $podcastFormat . '
+		
+		TRACK 01 AUDIO
+			TITLE "Open MetalCast Intro"
+			PERFORMER "Craig Maloney"
+			INDEX 01 00:00:00
 	');
 	
-	$trackNum=2
+	$trackNum=2;
 	
 	foreach($lines as $curLine)
 	{
@@ -57,10 +56,10 @@ if($_SERVER["argc"] != 3)
 		preg_match($nameRegExp, $curLine, $curName);
 		preg_match($artistRegExp, $curLine, $curArtist);
 		fwrite($file, '
-			TRACK ' . $trackNum . ' AUDIO
-			TITLE "' . $curName . '"
-			PERFORMER "' . $curArtist . '"
-			INDEX 01 ' . $curTime . ':00
+		TRACK ' . $trackNum . ' AUDIO
+			TITLE "' . $curName[1] . '"
+			PERFORMER "' . $curArtist[1] . '"
+			INDEX 01 ' . $curTime[1] . ':00
 		');
 		$trackNum++;
 	}
@@ -71,7 +70,7 @@ if($_SERVER["argc"] != 3)
 else
 {
 	print("CkOpenMetalCastCueSheetGenScript - a script for generating cue sheet files for Open MetalCast");
-	print("Version 0.1 by Cyber Killer\n");
+	print("Version 1.0 by Cyber Killer\n");
 	print("Get the latest version at http://digital.dharkness.info/CkOpenMetalCastCueSheetGenScript\n\n");
 	print("Usage:\n");
 	print($_SERVER["argv"][0] . " <txt file with tracklist copied from Open MetalCast website> <filename of the podcast file>\n");
