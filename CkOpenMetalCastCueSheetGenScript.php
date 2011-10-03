@@ -33,7 +33,8 @@ if($_SERVER["argc"] == 3)
 	$podcastFormat=substr($podcastFileName, -3, 3);
 
 	$lines = file($_SERVER["argv"][1]);
-
+	
+	print("Writing to file: " . "./" . $podcastName . ".cue\n");
 	$file = fopen("./" . $podcastName . ".cue", 'w');
 	fwrite($file, '
 		REM GENRE "Metal"
@@ -65,6 +66,7 @@ if($_SERVER["argc"] == 3)
 	}
 	fwrite($file, "\n");
 	fclose($file);
+	print("File written\n");
 	
 }
 else
