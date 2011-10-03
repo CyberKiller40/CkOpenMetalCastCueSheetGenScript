@@ -20,7 +20,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-if($_SERVER["argc"] != 2)
+if($_SERVER["argc"] != 3)
 {
 
 	$timeRegExp="/^(\d+:\d+)\s.+\sby\s.+\sfrom\s.+\s\(.+\)$/";
@@ -49,12 +49,24 @@ if($_SERVER["argc"] != 2)
 		INDEX 01 00:00:00
 	');
 	
-	//preg_match('/[\d]+/', $_SERVER["argv"][$num], $albumid);
+	$trackNum=2
 	
-	
-	
+	foreach($lines as $curLine)
+	{
+		preg_match($timeRegExp, $curLine, $curTime);
+		preg_match($nameRegExp, $curLine, $curName);
+		preg_match($artistRegExp, $curLine, $curArtist);
+		fwrite($file, '
+			TRACK ' . $trackNum . ' AUDIO
+			TITLE "' . $curName . '"
+			PERFORMER "' . $curArtist . '"
+			INDEX 01 ' . $curTime . ':00
+		');
+		$trackNum++;
+	}
+	fwrite($file, "\n");
 	fclose($file);
-
+	
 }
 else
 {
