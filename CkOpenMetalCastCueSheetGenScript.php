@@ -23,11 +23,11 @@
 if($_SERVER["argc"] != 1)
 {
 
-$timeRegExp="^(\d+:\d+)\s.+\sby\s.+\sfrom\s.+\s\(.+\)$";
-$nameRegExp="^\d+:\d+\s(.+)\sby\s.+\sfrom\s.+\s\(.+\)$";
-$artistRegExp="^\d+:\d+\s.+\sby\s(.+)\sfrom\s.+\s\(.+\)$";
-//$albumRegExp="^\d+:\d+\s.+\sby\s.+\sfrom\s(.+)\s\(.+\)$";
-//$licenseRegExp="^\d+:\d+\s.+\sby\s.+\sfrom\s.+\s\((.+)\)$";
+$timeRegExp="/^(\d+:\d+)\s.+\sby\s.+\sfrom\s.+\s\(.+\)$/";
+$nameRegExp="/^\d+:\d+\s(.+)\sby\s.+\sfrom\s.+\s\(.+\)$/";
+$artistRegExp="/^\d+:\d+\s.+\sby\s(.+)\sfrom\s.+\s\(.+\)$/";
+//$albumRegExp="/^\d+:\d+\s.+\sby\s.+\sfrom\s(.+)\s\(.+\)$/";
+//$licenseRegExp="/^\d+:\d+\s.+\sby\s.+\sfrom\s.+\s\((.+)\)$/";
 
 
 //preg_match('/[\d]+/', $_SERVER["argv"][$num], $albumid);
