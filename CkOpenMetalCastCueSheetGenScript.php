@@ -20,18 +20,40 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-if($_SERVER["argc"] != 1)
+if($_SERVER["argc"] != 2)
 {
 
-$timeRegExp="/^(\d+:\d+)\s.+\sby\s.+\sfrom\s.+\s\(.+\)$/";
-$nameRegExp="/^\d+:\d+\s(.+)\sby\s.+\sfrom\s.+\s\(.+\)$/";
-$artistRegExp="/^\d+:\d+\s.+\sby\s(.+)\sfrom\s.+\s\(.+\)$/";
-//$albumRegExp="/^\d+:\d+\s.+\sby\s.+\sfrom\s(.+)\s\(.+\)$/";
-//$licenseRegExp="/^\d+:\d+\s.+\sby\s.+\sfrom\s.+\s\((.+)\)$/";
+	$timeRegExp="/^(\d+:\d+)\s.+\sby\s.+\sfrom\s.+\s\(.+\)$/";
+	$nameRegExp="/^\d+:\d+\s(.+)\sby\s.+\sfrom\s.+\s\(.+\)$/";
+	$artistRegExp="/^\d+:\d+\s.+\sby\s(.+)\sfrom\s.+\s\(.+\)$/";
+	//$albumRegExp="/^\d+:\d+\s.+\sby\s.+\sfrom\s(.+)\s\(.+\)$/";
+	//$licenseRegExp="/^\d+:\d+\s.+\sby\s.+\sfrom\s.+\s\((.+)\)$/";
+	
+	$podcastFileName=$_SERVER["argv"][2];
+	$podcastName=substr($_SERVER["argv"][2], 0, -4);
+	$podcastFormat=substr($_SERVER["argv"][2], -3, 3);
 
+	$lines = file($_SERVER["argv"][1]);
 
-//preg_match('/[\d]+/', $_SERVER["argv"][$num], $albumid);
-
+	$file = fopen("./" . $_SERVER["argv"][1] .".cue", 'w');
+	fwrite($file, '
+	REM GENRE "Metal"
+	REM DATE "' . date("Y") . '"
+	PERFORMER "VA"
+	TITLE "' . $podcastName . '"
+	FILE "' . $podcastFileName . '" ' . $podcastFormat . '
+	
+	TRACK 01 AUDIO
+		TITLE "Open MetalCast Intro"
+		PERFORMER "Craig Maloney"
+		INDEX 01 00:00:00
+	');
+	
+	//preg_match('/[\d]+/', $_SERVER["argv"][$num], $albumid);
+	
+	
+	
+	fclose($file);
 
 }
 else
@@ -40,7 +62,7 @@ else
 	print("Version 0.1 by Cyber Killer\n");
 	print("Get the latest version at http://digital.dharkness.info/CkOpenMetalCastCueSheetGenScript\n\n");
 	print("Usage:\n");
-	print($_SERVER["argv"][0] . " <txt file with tracklist copied from Open MetalCast website>\n");
+	print($_SERVER["argv"][0] . " <txt file with tracklist copied from Open MetalCast website> <filename of the podcast file>\n");
 }
 
 ?>
