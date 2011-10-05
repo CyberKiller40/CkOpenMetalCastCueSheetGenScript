@@ -72,7 +72,7 @@ TRACK ' . $zero . $trackNum . ' AUDIO
 }
 else
 {
-	print("CkOpenMetalCastCueSheetGenScript - a script for generating cue sheet files for Open MetalCast");
+	print("CkOpenMetalCastCueSheetGenScript - a script for generating cue sheet files for Open MetalCast\n");
 	print("Version 1.0 by Cyber Killer\n");
 	print("Get the latest version at http://digital.dharkness.info/CkOpenMetalCastCueSheetGenScript\n\n");
 	print("Usage:\n");
