@@ -56,7 +56,14 @@ TRACK 01 AUDIO
 		preg_match($timeRegExp, $curLine, $curTime);
 		preg_match($nameRegExp, $curLine, $curName);
 		preg_match($artistRegExp, $curLine, $curArtist);
-		if($trackNum < 10) $zero="0";
+		if($trackNum < 10)
+		{
+			$zero="0";
+		}
+		else
+		{
+			$zero="";
+		}
 		fwrite($file, '
 TRACK ' . $zero . $trackNum . ' AUDIO
 	TITLE "' . $curName[1] . '"
